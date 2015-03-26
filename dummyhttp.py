@@ -4,6 +4,7 @@ from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from optparse import OptionParser
 
 import sys
+import socket
 
 class RequestHandler(BaseHTTPRequestHandler):
     
@@ -12,7 +13,8 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "plain/text")
         self.end_headers()
-        self.wfile.write("Hi! I'm [" + sys.argv[1] + "] service\n")
+        hostname = socket.gethostbyname(socket.gethostname())
+        self.wfile.write("Hi! I'm [" + sys.argv[1] + "] service from " + hostname + "\n")
         
     do_POST = do_GET
     do_PUT = do_POST
